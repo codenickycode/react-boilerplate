@@ -1,11 +1,6 @@
 import { RuleSetUseItem } from 'webpack';
 
-const localIdentName: string =
-  process.env.NODE_ENV === 'production'
-    ? '[hash:base64:6]'
-    : '[path][name]__[local]';
-
-const cssLoader: RuleSetUseItem = {
+const cssLoader: (mode: string) => RuleSetUseItem = (mode) => ({
   loader: 'css-loader',
   options: {
     importLoaders: 1,
@@ -13,9 +8,10 @@ const cssLoader: RuleSetUseItem = {
     modules: {
       auto: true,
       exportOnlyLocals: false,
-      localIdentName,
+      localIdentName:
+        mode === 'production' ? '[hash:base64:6]' : '[path][name]__[local]',
     },
   },
-};
+});
 
 export default cssLoader;

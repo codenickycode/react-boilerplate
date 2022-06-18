@@ -5,8 +5,8 @@
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "prebuild": "rm -rf build",
-    "build": "cross-env APP_ENV=production pnpm prebuild && webpack --config ./webpack.config/index.ts",
-    "develop": "cross-env APP_ENV=development webpack serve --config ./webpack.config/index.ts",
+    "build": "cross-env pnpm prebuild && webpack --config ./webpack.config/index.ts --env mode=production",
+    "develop": "cross-env webpack serve --config ./webpack.config/index.ts --env mode=development",
     "lint": "eslint src",
     "test": "jest",
     "typecheck": "tsc"

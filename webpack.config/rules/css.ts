@@ -5,15 +5,13 @@ import miniCssExtractLoader from '../loaders/mini-css-extract';
 import postCssLoader from '../loaders/postcss';
 
 /** Build the CSS files. */
-const cssRule: RuleSetRule = {
+const cssRule: (mode: string) => RuleSetRule = (mode) => ({
   test: /\.css$/i,
   use: [
-    process.env.NODE_ENV === 'production'
-      ? miniCssExtractLoader
-      : 'style-loader',
-    cssLoader,
+    mode === 'production' ? miniCssExtractLoader : 'style-loader',
+    cssLoader(mode),
     postCssLoader,
   ],
-};
+});
 
 export default cssRule;
