@@ -3,6 +3,7 @@
     "target": "es6",
     "module": "commonjs",
     "types": ["node", "@types/jest"],
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
