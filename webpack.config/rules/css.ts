@@ -1,10 +1,8 @@
 import { RuleSetRule } from 'webpack';
-
 import cssLoader from '../loaders/css';
 import miniCssExtractLoader from '../loaders/mini-css-extract';
 import postCssLoader from '../loaders/postcss';
 
-/** Build the CSS files. */
 const cssRule: (mode: string) => RuleSetRule = (mode) => ({
   test: /\.css$/i,
   use: [
