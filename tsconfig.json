@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "types": ["node", "@types/jest"],
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "noEmit": true,
+    "jsx": "react-jsx"
+  },
+  "include": [
+    "src/**/*",
+    "webpack.config/**/*",
+    "jest.config.ts",
+    ".eslintrc.js"
+  ],
+  "exclude": ["node_modules", "build"]
+}
