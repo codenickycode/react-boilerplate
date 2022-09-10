@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "es6",
     "module": "commonjs",
-    "types": ["node", "@types/jest"],
+    "types": ["node", "@types/jest", "@types/testing-library__jest-dom"],
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "resolveJsonModule": true,
     "esModuleInterop": true,
@@ -16,7 +16,7 @@
   "include": [
     "src/**/*",
     "webpack.config/**/*",
-    "jest.config.ts",
+    "jest.config.cjs",
     ".eslintrc.js"
   ],
   "exclude": ["node_modules", "build"]

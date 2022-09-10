@@ -6,4 +6,4 @@ if (!container) {
   throw new Error('no root container!');
 }
 const root = createRoot(container);
-root.render(<App />);
+root.render(<App testCopy={'Hello World!'} />);

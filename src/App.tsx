@@ -1,9 +1,13 @@
 import styles from './App.module.css';
 
-export function App() {
+interface AppProps {
+  testCopy: string;
+}
+
+export function App(props: AppProps) {
   return (
     <>
-      <h1 className={styles.header}>Hello World!</h1>
+      <h1 className={styles.header}>{props.testCopy}</h1>
     </>
   );
 }
