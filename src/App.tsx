@@ -8,6 +8,7 @@ export function App(props: AppProps) {
   return (
     <>
       <h1 className={styles.header}>{props.testCopy}</h1>
+      <p>I am working!</p>
     </>
   );
 }
