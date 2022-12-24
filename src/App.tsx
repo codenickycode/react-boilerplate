@@ -1,5 +1,5 @@
 import styles from './App.module.css';
-import ReactIcon from './react.svg';
+import ReactIcon from './assets/react.svg';
 
 interface AppProps {
   testCopy: string;

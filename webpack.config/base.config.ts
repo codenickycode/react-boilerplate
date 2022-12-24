@@ -6,6 +6,7 @@ import imageRule from './rules/image';
 import svgRule from './rules/svg';
 import cssRule from './rules/css';
 import typescriptRule from './rules/typescript';
+import fontRule from './rules/font';
 
 const baseConfig: (mode: string) => Configuration = (mode) => ({
   context: path.resolve(__dirname, '../'),
@@ -16,7 +17,7 @@ const baseConfig: (mode: string) => Configuration = (mode) => ({
   },
   plugins: basePlugins,
   module: {
-    rules: [svgRule, imageRule, cssRule(mode), typescriptRule],
+    rules: [fontRule, svgRule, imageRule, cssRule(mode), typescriptRule],
   },
   devtool: 'source-map',
   resolve: {
