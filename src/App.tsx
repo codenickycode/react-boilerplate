@@ -10,7 +10,12 @@ export function App(props: AppProps) {
     <>
       <ReactIcon />
       <h1 className={styles.header}>{props.testCopy}</h1>
-      <p>I am working!</p>
+      <h2>Build Checklist</h2>
+      <ol>
+        <li>{'React Icon (svg loader)'}</li>
+        <li>{'Blue header (css modules)'}</li>
+        <li>{'Open Sans (font loader)'}</li>
+      </ol>
     </>
   );
 }
