@@ -2,7 +2,8 @@ import path from 'path';
 import { Configuration } from 'webpack';
 
 import basePlugins from './plugins/base';
-import assetRule from './rules/asset';
+import imageRule from './rules/image';
+import svgRule from './rules/svg';
 import cssRule from './rules/css';
 import typescriptRule from './rules/typescript';
 
@@ -15,7 +16,7 @@ const baseConfig: (mode: string) => Configuration = (mode) => ({
   },
   plugins: basePlugins,
   module: {
-    rules: [assetRule, cssRule(mode), typescriptRule],
+    rules: [svgRule, imageRule, cssRule(mode), typescriptRule],
   },
   devtool: 'source-map',
   resolve: {

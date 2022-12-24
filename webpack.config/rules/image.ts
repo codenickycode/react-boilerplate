@@ -1,9 +1,9 @@
 import { RuleSetRule } from 'webpack';
 
-const assetRule: RuleSetRule = {
-  test: /\.(png|jpe?g|gif|svg)$/i,
+const imageRule: RuleSetRule = {
+  test: /\.(png|jpe?g|gif)$/i,
   type: 'asset',
   // parser: { dataUrlCondition: { maxSize: 1024 } },
 };
 
-export default assetRule;
+export default imageRule;

@@ -16,7 +16,7 @@
   "include": [
     "src/**/*",
     "webpack.config/**/*",
-    "jest.config.cjs",
+    "jest.config.ts",
     ".eslintrc.js"
   ],
   "exclude": ["node_modules", "build"]

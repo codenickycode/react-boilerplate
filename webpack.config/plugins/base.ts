@@ -3,6 +3,7 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import { WebpackPluginInstance } from 'webpack';
 import WebpackBar from 'webpackbar';
+import Dotenv from 'dotenv-webpack';
 
 const basePlugins: WebpackPluginInstance[] = [
   new WebpackBar(),
@@ -11,6 +12,7 @@ const basePlugins: WebpackPluginInstance[] = [
     template: './src/index.html',
   }),
   new MiniCssExtractPlugin(),
+  new Dotenv(),
 ];
 
 export default basePlugins;

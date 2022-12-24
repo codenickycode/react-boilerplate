@@ -10,6 +10,7 @@ export default {
   coverageProvider: 'v8',
   moduleNameMapper: {
     '^.+\\.css$': '<rootDir>/src/test/styleMock.ts',
+    '^.+\\.svg$': '<rootDir>/src/test/svgMock.ts',
   },
   setupFilesAfterEnv: ['<rootDir>/src/test/setupTests.ts'],
   transform: {
