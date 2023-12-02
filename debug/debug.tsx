@@ -1,4 +1,4 @@
-import { DebugDashboard } from "./components/DebugDashboard";
+import { DebugDashboard } from "./DebugDashboard/DebugDashboard";
 import "./index.css";
 import { createRoot } from "react-dom/client";
 

@@ -1,0 +1,9 @@
+.console {
+  width: 98%;
+  border: 1px solid var(--divider-primary);
+  padding: var(--padding-card);
+  height: 150px;
+  overflow: auto;
+  background: var(--code-background);
+  color: var(--code-text);
+}

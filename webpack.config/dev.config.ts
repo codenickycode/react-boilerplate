@@ -13,7 +13,7 @@ const devConfig: Configuration = {
   stats: "minimal",
   devServer: {
     port: 3003,
-    open: false,
+    open: true,
     hot: true,
     historyApiFallback: true,
   },

@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import useWebSocket from "react-use-websocket";
-import { ScriptStatus } from "../script-server/script-server.types";
-import { ConsoleOutput } from "./ConsoleOutput";
-import styles from "./styles/ScriptRunner.module.css";
+import { ScriptStatus } from "../../script-server/script-server.types";
+import { ConsoleOutput } from "../ConsoleOutput/ConsoleOutput";
+import styles from "./ScriptRunner.module.css";
 
-type ScriptName = "lint" | "test" | "typecheck";
+type ScriptName = "build" | "css" | "lint" | "test" | "typecheck";
 
 const socketUrl = "ws://localhost:8000";
 

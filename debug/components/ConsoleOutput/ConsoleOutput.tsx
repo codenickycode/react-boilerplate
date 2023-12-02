@@ -1,7 +1,7 @@
-import { useEffect, useImperativeHandle, useRef, useState } from "react";
-import styles from "./styles/ConsoleOutput.module.css";
+import { useEffect, useRef, useState } from "react";
+import styles from "./ConsoleOutput.module.css";
 import Ansi from "ansi-to-react";
-import { Output } from "../script-server/script-server.types";
+import { Output } from "../../script-server/script-server.types";
 import clsx from "clsx";
 
 export function ConsoleOutput({ output }: { output: Output | undefined }) {

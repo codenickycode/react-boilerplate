@@ -4,11 +4,6 @@
   margin: 0 auto;
 }
 
-.debug-dashboard li {
-  break-inside: avoid;
-  white-space: nowrap;
-}
-
 .css-module-check {
   color: var(--accent-primary);
 }
@@ -31,17 +26,15 @@
 
 .bundler-checklist-items {
   display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
   justify-content: space-evenly;
   font-size: small;
-}
-
-.bundler-checklist-item-sub {
-  font-size: smaller;
 }
 
 .script-runners {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(38rem, 1fr));
   grid-template-rows: 1fr;
-  grid-gap: 1rem;
+  grid-gap: 2rem;
 }
