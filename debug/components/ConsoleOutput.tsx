@@ -6,14 +6,14 @@ import clsx from "clsx";
 
 export function ConsoleOutput({ output }: { output: Output | undefined }) {
   const [codeLines, setCodeLines] = useState<string[]>([]);
-  const linesRef = useRef<HTMLDivElement>(null);
+  const lastLineRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (output) {
       const newLine = String.fromCharCode(...(output?.data || []));
       setCodeLines((prevLines) => [...prevLines, newLine]);
       setTimeout(() => {
-        linesRef.current?.querySelector("code")?.scrollIntoView();
+        lastLineRef.current?.querySelector("code")?.scrollIntoView();
       }, 200);
     }
   }, [output]);
@@ -23,7 +23,7 @@ export function ConsoleOutput({ output }: { output: Output | undefined }) {
       <pre>
         {codeLines.map((line, i) => {
           // attach the ref to the last line so we can scroll the console
-          const ref = i === codeLines.length - 1 ? linesRef : null;
+          const ref = i === codeLines.length - 1 ? lastLineRef : null;
           return (
             <div ref={ref} key={line + i}>
               <Ansi>{line}</Ansi>
