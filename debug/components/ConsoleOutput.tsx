@@ -4,12 +4,6 @@ import Ansi from "ansi-to-react";
 import { Output } from "../script-server/script-server.types";
 import clsx from "clsx";
 
-function scrollToBottom(element: HTMLElement) {
-  const code = element.querySelector("code");
-  if (!code) return;
-  code.scroll({ top: code.scrollHeight });
-}
-
 export function ConsoleOutput({ output }: { output: Output | undefined }) {
   const [codeLines, setCodeLines] = useState<string[]>([]);
   const linesRef = useRef<HTMLDivElement>(null);
