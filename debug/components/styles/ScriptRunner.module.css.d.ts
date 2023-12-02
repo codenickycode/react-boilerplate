@@ -1,6 +1,6 @@
 declare const styles:
-  & Readonly<{ "script-status": string }>
-  & Readonly<{ "scriptStatus": string }>
+  & Readonly<{ "script-runner": string }>
+  & Readonly<{ "scriptRunner": string }>
 ;
 export default styles;
 //# sourceMappingURL=./ScriptRunner.module.css.d.ts.map

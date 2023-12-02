@@ -13,6 +13,8 @@ declare const styles:
   & Readonly<{ "icon": string }>
   & Readonly<{ "bundler-checklist-items": string }>
   & Readonly<{ "bundlerChecklistItems": string }>
+  & Readonly<{ "bundler-checklist-item-sub": string }>
+  & Readonly<{ "bundlerChecklistItemSub": string }>
   & Readonly<{ "script-runners": string }>
   & Readonly<{ "scriptRunners": string }>
 ;

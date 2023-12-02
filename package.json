@@ -9,10 +9,10 @@
     "build": "cross-env pnpm prebuild && webpack --config ./webpack.config/index.ts --env mode=production --entry ./src/index.tsx",
     "debug": "pnpm css --watch & FORCE_COLOR=1 pnpm script-server & cross-env webpack serve --config ./webpack.config/index.ts --env mode=development --entry ./debug/debug.tsx",
     "develop": "pnpm css --watch & cross-env webpack serve --config ./webpack.config/index.ts --env mode=development --entry ./src/index.tsx",
-    "lint": "eslint src",
+    "lint": "eslint src --env-info",
     "script-server": "ts-node debug/script-server/script-server.ts",
     "test": "jest",
-    "typecheck": "tsc"
+    "typecheck": "tsc --diagnostics"
   },
   "repository": {
     "type": "git",

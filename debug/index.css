@@ -5,6 +5,22 @@
   font-style: normal;
 }
 
+:root {
+  --background: #1f1f1f;
+  --text-primary: #fff;
+  --accent-primary: #18dcff;
+  --divider-primary: #4d4d4d;
+  --code-background: #000;
+  --code-text: #fffafa;
+}
+
 body {
   font-family: "Open Sans";
+  background-color: var(--background);
+  color: var(--text-primary);
+}
+
+h3 {
+  font-size: medium;
+  margin: 0.75rem 0 0;
 }

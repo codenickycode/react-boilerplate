@@ -8,10 +8,14 @@ type ScriptName = "lint" | "test" | "typecheck";
 
 const socketUrl = "ws://localhost:8000";
 
-const emoji: Record<ScriptName, string> = {
-  lint: "🧹",
-  test: "🧪",
-  typecheck: "🔎",
+const statusEmoji = (script: ScriptName, status?: ScriptStatus["status"]) => {
+  if (status === undefined) return "?";
+  if (status === "failed") return "❌";
+  if (status === "success") return "✅";
+  if (script === "lint") return "🧹";
+  if (script === "test") return "🧪";
+  // typecheck
+  return "🔎";
 };
 
 export function ScriptRunner({ script }: { script: ScriptName }) {
@@ -23,16 +27,18 @@ export function ScriptRunner({ script }: { script: ScriptName }) {
   }, [script, sendJsonMessage]);
 
   const { status, message, output } = lastJsonMessage || {};
+  const emoji = statusEmoji(script, status);
+  const statusMessage = message || status;
 
   return (
-    <div>
+    <div className={styles.scriptRunner}>
       <h4>
         <pre>
-          {emoji[script]}
-          {" ◦ "}
-          {script}
-          {" ◦ "}
-          <code>{message || status}</code>
+          <code>
+            {script}
+            {" _ "}
+            {emoji} {statusMessage}
+          </code>
         </pre>
       </h4>
       <ConsoleOutput output={output} />

@@ -4,15 +4,16 @@
 
 .debug-dashboard li {
   break-inside: avoid;
+  white-space: nowrap;
 }
 
 .css-module-check {
-  color: blue;
+  color: var(--accent-primary);
 }
 
 .divider {
   margin: 2rem 0 0;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid var(--divider-primary);
 }
 
 .section-children {
@@ -23,6 +24,7 @@
   width: 24px;
   height: 24px;
   vertical-align: middle;
+  fill: var(--text-primary);
 }
 
 .bundler-checklist-items {
@@ -30,10 +32,16 @@
   max-width: 38rem;
   grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
   grid-gap: 1rem;
+  font-size: small;
+}
+
+.bundler-checklist-item-sub {
+  font-size: smaller;
 }
 
 .script-runners {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(38rem, 1fr));
+  grid-template-rows: 1fr;
   grid-gap: 1rem;
 }

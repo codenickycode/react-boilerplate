@@ -17,11 +17,7 @@ export function ConsoleOutput({ output }: { output: Output | undefined }) {
   }, [output]);
 
   return (
-    <div
-      className={clsx(styles.console, {
-        resizeVertical: codeLines.length > 6,
-      })}
-    >
+    <div className={clsx(styles.console)}>
       <pre>
         {codeLines.map((line, i) => {
           const ref = i === codeLines.length - 1 ? linesRef : null;

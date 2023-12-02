@@ -37,13 +37,13 @@ wss.on("connection", (ws: WebSocket) => {
         sendStatus({
           script,
           status: "failed",
-          message: "❌ Code: " + code,
+          message: "Code: " + code,
         });
       } else {
         sendStatus({
           script,
           status: "success",
-          message: "✅ Success!",
+          message: "Success!",
         });
       }
     });
