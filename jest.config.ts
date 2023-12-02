@@ -6,16 +6,16 @@
 export default {
   clearMocks: true,
   collectCoverage: true,
-  coverageDirectory: 'coverage',
-  coverageProvider: 'v8',
+  coverageDirectory: "coverage",
+  coverageProvider: "v8",
   moduleNameMapper: {
-    '^.+\\.css$': '<rootDir>/src/test/styleMock.ts',
-    '^.+\\.svg$': '<rootDir>/src/test/svgMock.ts',
+    "^.+\\.css$": "<rootDir>/test/styleMock.ts",
+    "^.+\\.svg$": "<rootDir>/test/svgMock.ts",
   },
-  setupFilesAfterEnv: ['<rootDir>/src/test/setupTests.ts'],
+  setupFilesAfterEnv: ["<rootDir>/test/setupTests.ts"],
   transform: {
-    '^.+\\.tsx?$': ['@swc/jest'],
+    "^.+\\.tsx?$": ["@swc/jest"],
   },
-  testEnvironment: 'jsdom',
+  testEnvironment: "jsdom",
   verbose: true,
 };

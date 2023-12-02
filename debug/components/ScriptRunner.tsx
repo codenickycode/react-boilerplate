@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import useWebSocket from "react-use-websocket";
 import { ScriptStatus } from "../script-server/script-server.types";
-import { ConsoleOutput } from "./components/ConsoleOutput";
+import { ConsoleOutput } from "./ConsoleOutput";
 
 type ScriptName = "lint" | "test" | "typecheck";
 

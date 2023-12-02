@@ -18,7 +18,9 @@
     "webpack.config/**/*",
     "jest.config.ts",
     ".eslintrc.js",
-    "script-server/**/*"
+    "debug/**/*",
+    "global.d.ts",
+    "test"
   ],
   "exclude": ["node_modules", "build"]
 }

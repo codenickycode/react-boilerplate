@@ -5,10 +5,11 @@
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "prebuild": "rm -rf build",
-    "build": "cross-env pnpm prebuild && webpack --config ./webpack.config/index.ts --env mode=production",
-    "develop": "FORCE_COLOR=1 pnpm script-server & cross-env webpack serve --config ./webpack.config/index.ts --env mode=development",
+    "build": "cross-env pnpm prebuild && webpack --config ./webpack.config/index.ts --env mode=production --entry ./src/index.tsx",
+    "debug": "FORCE_COLOR=1 pnpm script-server & cross-env webpack serve --config ./webpack.config/index.ts --env mode=development --entry ./debug/debug.tsx",
+    "develop": "cross-env webpack serve --config ./webpack.config/index.ts --env mode=development --entry ./src/index.tsx",
     "lint": "eslint src",
-    "script-server": "ts-node script-server/script-server.ts",
+    "script-server": "ts-node debug/script-server/script-server.ts",
     "test": "jest",
     "typecheck": "tsc"
   },
