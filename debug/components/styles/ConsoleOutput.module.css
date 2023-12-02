@@ -1,13 +1,11 @@
 .console {
+  width: 100%;
+  max-width: 48rem;
   border: 1px solid #ccc;
+  height: 150px;
+  overflow: auto;
 }
 
-.content {
-  height: 100px;
-  overflow-y: scroll;
-}
-
-.lines {
-  height: fit-content;
-  min-height: 100%;
+.resize-vertical {
+  resize: vertical;
 }

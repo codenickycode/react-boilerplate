@@ -1,32 +1,37 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "./styles/ConsoleOutput.module.css";
 import Ansi from "ansi-to-react";
 import { Output } from "../script-server/script-server.types";
-
-const DISPLAY_LAST = 2;
+import clsx from "clsx";
 
 export function ConsoleOutput({ output }: { output: Output | undefined }) {
   const [codeLines, setCodeLines] = useState<string[]>([]);
-  const [expanded, setExpanded] = useState(false);
+  const linesRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (output) {
       const newLine = String.fromCharCode(...(output?.data || []));
       setCodeLines((prevLines) => [...prevLines, newLine]);
+      setTimeout(() => linesRef.current?.scrollIntoView(), 200);
     }
   }, [output]);
 
   return (
-    <div className={styles.console}>
-      <div className={styles.content}>
-        <div className={styles.lines}>
-          <pre>
-            {codeLines.map((line, i) => (
-              <Ansi key={line + i}>{line}</Ansi>
-            ))}
-          </pre>
-        </div>
-      </div>
+    <div
+      className={clsx(styles.console, {
+        resizeVertical: codeLines.length > 6,
+      })}
+    >
+      <pre>
+        {codeLines.map((line, i) => {
+          const ref = i === codeLines.length - 1 ? linesRef : null;
+          return (
+            <div ref={ref} key={line + i}>
+              <Ansi>{line}</Ansi>
+            </div>
+          );
+        })}
+      </pre>
     </div>
   );
 }

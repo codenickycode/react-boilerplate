@@ -1,1 +1,1 @@
-{"version":3,"sources":["./ConsoleOutput.module.css"],"names":["console","content","lines"],"mappings":"AAAA;AAAA,E,aAAAA,S,WAAA;AAAA,E,aAAAA,S,WAAA;AAAA,E,aAIAC,S,WAJA;AAAA,E,aAIAA,S,WAJA;AAAA,E,aASAC,O,WATA;AAAA,E,aASAA,O,WATA;AAAA;AAAA","file":"ConsoleOutput.module.css.d.ts","sourceRoot":""}
+{"version":3,"sources":["./ConsoleOutput.module.css"],"names":["console","resize-vertical","resizeVertical"],"mappings":"AAAA;AAAA,E,aAAAA,S,WAAA;AAAA,E,aAAAA,S,WAAA;AAAA,E,aAQAC,iB,WARA;AAAA,E,aAQAC,gB,WARA;AAAA;AAAA","file":"ConsoleOutput.module.css.d.ts","sourceRoot":""}

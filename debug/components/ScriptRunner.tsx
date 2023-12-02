@@ -25,12 +25,16 @@ export function ScriptRunner({ script }: { script: ScriptName }) {
   const { status, message, output } = lastJsonMessage || {};
 
   return (
-    <div className={styles.scriptRunner}>
-      <h3>
-        {emoji[script]}
-        {"  "}
-        {script} ➡ {message || status}
-      </h3>
+    <div>
+      <h4>
+        <pre>
+          {emoji[script]}
+          {" ◦ "}
+          {script}
+          {" ◦ "}
+          <code>{message || status}</code>
+        </pre>
+      </h4>
       <ConsoleOutput output={output} />
     </div>
   );

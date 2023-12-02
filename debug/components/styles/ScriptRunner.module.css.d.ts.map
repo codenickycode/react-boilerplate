@@ -1,1 +1,1 @@
-{"version":3,"sources":["./ScriptRunner.module.css"],"names":["script-runner","scriptRunner"],"mappings":"AAAA;AAAA,E,aAAAA,e,WAAA;AAAA,E,aAAAC,c,WAAA;AAAA;AAAA","file":"ScriptRunner.module.css.d.ts","sourceRoot":""}
+{"version":3,"sources":["./ScriptRunner.module.css"],"names":["script-status","scriptStatus"],"mappings":"AAAA;AAAA,E,aAAAA,e,WAAA;AAAA,E,aAAAC,c,WAAA;AAAA;AAAA","file":"ScriptRunner.module.css.d.ts","sourceRoot":""}

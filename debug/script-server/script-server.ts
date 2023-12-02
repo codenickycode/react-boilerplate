@@ -24,6 +24,14 @@ wss.on("connection", (ws: WebSocket) => {
       });
     });
 
+    scriptProcess.stderr.on("data", (data) => {
+      sendStatus({
+        script,
+        status: "running",
+        output: data,
+      });
+    });
+
     scriptProcess.on("close", (code) => {
       if (code !== 0) {
         sendStatus({

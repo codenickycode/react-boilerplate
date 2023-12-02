@@ -1,13 +1,39 @@
+.debug-dashboard {
+  padding: 0.25rem;
+}
+
 .debug-dashboard li {
-  margin: 1rem 0;
+  break-inside: avoid;
 }
 
 .css-module-check {
   color: blue;
 }
 
+.divider {
+  margin: 2rem 0 0;
+  border-bottom: 1px solid #ccc;
+}
+
+.section-children {
+  padding: 0 1rem;
+}
+
 .icon {
   width: 24px;
   height: 24px;
   vertical-align: middle;
+}
+
+.bundler-checklist-items {
+  display: grid;
+  max-width: 38rem;
+  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+  grid-gap: 1rem;
+}
+
+.script-runners {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(38rem, 1fr));
+  grid-gap: 1rem;
 }
