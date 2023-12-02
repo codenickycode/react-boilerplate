@@ -22,6 +22,7 @@ export function ConsoleOutput({ output }: { output: Output | undefined }) {
     <div className={clsx(styles.console)}>
       <pre>
         {codeLines.map((line, i) => {
+          // attach the ref to the last line so we can scroll the console
           const ref = i === codeLines.length - 1 ? linesRef : null;
           return (
             <div ref={ref} key={line + i}>
