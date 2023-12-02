@@ -1,7 +1,7 @@
-import { RuleSetUseItem } from 'webpack';
+import { RuleSetUseItem } from "webpack";
 
 const cssLoader: (mode: string) => RuleSetUseItem = (mode) => ({
-  loader: 'css-loader',
+  loader: "css-loader",
   options: {
     importLoaders: 1,
     sourceMap: true,
@@ -9,7 +9,8 @@ const cssLoader: (mode: string) => RuleSetUseItem = (mode) => ({
       auto: true,
       exportOnlyLocals: false,
       localIdentName:
-        mode === 'production' ? '[hash:base64:6]' : '[path][name]__[local]',
+        mode === "production" ? "[hash:base64:6]" : "[path][name]__[local]",
+      exportLocalsConvention: "camelCase",
     },
   },
 });

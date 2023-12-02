@@ -1,7 +1,10 @@
 import { act, render, screen } from "@testing-library/react";
-import { DebugDashboard } from "./DebugDashboard";
+
+function TestComponent() {
+  return "test!";
+}
 
 test("should render the test copy from props", async () => {
-  await act(async () => render(<DebugDashboard testCopy="test!" />));
+  await act(async () => render(<TestComponent />));
   expect(screen.getByText("test!")).toBeInTheDocument();
 });

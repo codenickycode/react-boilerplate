@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import styles from "./ConsoleOutput.module.css";
+import styles from "./styles/ConsoleOutput.module.css";
 import Ansi from "ansi-to-react";
 import { Output } from "../script-server/script-server.types";
 

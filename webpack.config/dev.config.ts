@@ -1,19 +1,19 @@
-import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
-import basePlugins from './plugins/base';
-import { Configuration as WebpackConfiguration } from 'webpack';
-import { Configuration as WebpackDevServerConfiguration } from 'webpack-dev-server';
+import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin";
+import basePlugins from "./plugins/base";
+import { Configuration as WebpackConfiguration } from "webpack";
+import { Configuration as WebpackDevServerConfiguration } from "webpack-dev-server";
 
 interface Configuration extends WebpackConfiguration {
   devServer?: WebpackDevServerConfiguration;
 }
 
 const devConfig: Configuration = {
-  mode: 'development',
+  mode: "development",
   plugins: [...basePlugins, new ReactRefreshWebpackPlugin()],
-  stats: 'minimal',
+  stats: "minimal",
   devServer: {
     port: 3003,
-    open: true,
+    open: false,
     hot: true,
     historyApiFallback: true,
   },

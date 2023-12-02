@@ -7,4 +7,4 @@ if (!container) {
   throw new Error("no root container!");
 }
 const root = createRoot(container);
-root.render(<DebugDashboard testCopy="test copy" />);
+root.render(<DebugDashboard />);

@@ -14,13 +14,14 @@
     "jsx": "react-jsx"
   },
   "include": [
-    "src/**/*",
-    "webpack.config/**/*",
-    "jest.config.ts",
     ".eslintrc.js",
     "debug/**/*",
     "global.d.ts",
-    "test"
+    "jest.config.ts",
+    "src/**/*",
+    "test",
+    "types",
+    "webpack.config/**/*"
   ],
   "exclude": ["node_modules", "build"]
 }

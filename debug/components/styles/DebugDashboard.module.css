@@ -1,0 +1,13 @@
+.debug-dashboard li {
+  margin: 1rem 0;
+}
+
+.css-module-check {
+  color: blue;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  vertical-align: middle;
+}
