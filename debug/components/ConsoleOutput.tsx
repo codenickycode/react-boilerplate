@@ -13,9 +13,7 @@ export function ConsoleOutput({ output }: { output: Output | undefined }) {
       const newLine = String.fromCharCode(...(output?.data || []));
       setCodeLines((prevLines) => [...prevLines, newLine]);
       setTimeout(() => {
-        const code = linesRef.current?.querySelector("code");
-        if (!code) return;
-        code.scrollIntoView();
+        linesRef.current?.querySelector("code")?.scrollIntoView();
       }, 200);
     }
   }, [output]);
