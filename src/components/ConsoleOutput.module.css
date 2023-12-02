@@ -1,0 +1,14 @@
+.console {
+  border: 1px solid #ccc;
+  max-width: 42rem;
+}
+
+.content {
+  height: 100px;
+  overflow-y: scroll;
+}
+
+.lines {
+  height: fit-content;
+  min-height: 100%;
+}

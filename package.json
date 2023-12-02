@@ -6,8 +6,9 @@
     "preinstall": "npx only-allow pnpm",
     "prebuild": "rm -rf build",
     "build": "cross-env pnpm prebuild && webpack --config ./webpack.config/index.ts --env mode=production",
-    "develop": "cross-env webpack serve --config ./webpack.config/index.ts --env mode=development",
+    "develop": "FORCE_COLOR=1 pnpm script-server & cross-env webpack serve --config ./webpack.config/index.ts --env mode=development",
     "lint": "eslint src",
+    "script-server": "ts-node script-server/script-server.ts",
     "test": "jest",
     "typecheck": "tsc"
   },
@@ -41,6 +42,7 @@
     "@types/react": "^18.2.40",
     "@types/react-dom": "^18.2.17",
     "@types/webpack": "^5.28.5",
+    "@types/ws": "^8.5.10",
     "@typescript-eslint/eslint-plugin": "^6.13.1",
     "@typescript-eslint/parser": "^6.13.1",
     "autoprefixer": "^10.4.16",
@@ -70,8 +72,11 @@
     "webpackbar": "^5.0.2"
   },
   "dependencies": {
+    "ansi-to-react": "^6.1.6",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-use-websocket": "^4.5.0",
+    "ws": "^8.14.2"
   },
   "engines": {
     "node": ">=18.12.0"
