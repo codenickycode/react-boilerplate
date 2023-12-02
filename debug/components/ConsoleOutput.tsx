@@ -1,8 +1,14 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useImperativeHandle, useRef, useState } from "react";
 import styles from "./styles/ConsoleOutput.module.css";
 import Ansi from "ansi-to-react";
 import { Output } from "../script-server/script-server.types";
 import clsx from "clsx";
+
+function scrollToBottom(element: HTMLElement) {
+  const code = element.querySelector("code");
+  if (!code) return;
+  code.scroll({ top: code.scrollHeight });
+}
 
 export function ConsoleOutput({ output }: { output: Output | undefined }) {
   const [codeLines, setCodeLines] = useState<string[]>([]);
@@ -12,7 +18,11 @@ export function ConsoleOutput({ output }: { output: Output | undefined }) {
     if (output) {
       const newLine = String.fromCharCode(...(output?.data || []));
       setCodeLines((prevLines) => [...prevLines, newLine]);
-      setTimeout(() => linesRef.current?.scrollIntoView(), 200);
+      setTimeout(() => {
+        const code = linesRef.current?.querySelector("code");
+        if (!code) return;
+        code.scrollIntoView();
+      }, 200);
     }
   }, [output]);
 

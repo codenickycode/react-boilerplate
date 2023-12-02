@@ -1,2 +1,11 @@
 .script-runner {
+  width: 38rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.script-runner h4 {
+  align-self: start;
 }

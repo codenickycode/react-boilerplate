@@ -1,5 +1,7 @@
 .debug-dashboard {
   padding: 0.25rem;
+  max-width: 1280px;
+  margin: 0 auto;
 }
 
 .debug-dashboard li {
@@ -12,7 +14,7 @@
 }
 
 .divider {
-  margin: 2rem 0 0;
+  margin: 2rem 0;
   border-bottom: 1px solid var(--divider-primary);
 }
 
@@ -28,10 +30,8 @@
 }
 
 .bundler-checklist-items {
-  display: grid;
-  max-width: 38rem;
-  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
-  grid-gap: 1rem;
+  display: flex;
+  justify-content: space-evenly;
   font-size: small;
 }
 
