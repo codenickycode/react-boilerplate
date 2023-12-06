@@ -2,9 +2,22 @@ import { useEffect, useState } from "react";
 import Ansi from "ansi-to-react";
 import { Output } from "../../script-server/script-server.types";
 
-export function ConsoleOutput({ output }: { output: Output | undefined }) {
+export function ConsoleOutput({
+  output,
+  script,
+}: {
+  output: Output | undefined;
+  script: string;
+}) {
   const [rootEl, setRootRef] = useState<HTMLDivElement | null>(null);
-  const [codeLines, setCodeLines] = useState<string[]>([]);
+  const [codeLines, setCodeLines] = useState<string[]>([
+    "\n",
+    "\n",
+    "\n",
+    "\n",
+    "\n",
+    `$ pnpm run ${script} ▋`,
+  ]);
 
   // Add output each time it's received
   useEffect(() => {
@@ -23,7 +36,7 @@ export function ConsoleOutput({ output }: { output: Output | undefined }) {
   return (
     <div
       ref={setRootRef}
-      className="w-[98%] border border-divider-primary p-padding-card h-40 overflow-auto bg-code-background text-code-text"
+      className="w-[98%] border border-divider-primary p-card h-40 overflow-auto bg-code-background text-code-text"
     >
       <pre>
         {codeLines.map((line, i) => {

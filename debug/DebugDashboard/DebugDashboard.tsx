@@ -1,9 +1,12 @@
 import { ScriptRunner } from "../components/ScriptRunner/ScriptRunner";
 import ReactIcon from "../assets/react.svg";
-import { ReactNode, forwardRef } from "react";
+import { ReactNode, forwardRef, useState } from "react";
 import { ChecklistItem } from "../components/ChecklistItem";
 
+const scripts = ["lint", "test", "typecheck", "css", "build"] as const;
+
 export function DebugDashboard() {
+  const [runAllScripts, setRunAllScripts] = useState(false);
   return (
     <div className="my-0 mx-auto max-w-7xl p-1">
       <Section title="Bundler Checklist" divide>
@@ -31,12 +34,19 @@ export function DebugDashboard() {
         </div>
       </Section>
       <Section title="Scripts">
+        <div className="flex justify-end p-4 font-mono">
+          <button onClick={() => setRunAllScripts((prev) => !prev)}>
+            {runAllScripts ? "stop" : "run"} all {runAllScripts ? "⏹" : "▶️"}
+          </button>
+        </div>
         <div className="grid grid-cols-auto-fill-38rem gap-4">
-          <ScriptRunner script="lint" />
-          <ScriptRunner script="test" />
-          <ScriptRunner script="typecheck" />
-          <ScriptRunner script="css" />
-          <ScriptRunner script="build" />
+          {scripts.map((script) => (
+            <ScriptRunner
+              key={`${script}+${runAllScripts}`}
+              script={script}
+              runOnMount={runAllScripts}
+            />
+          ))}
         </div>
       </Section>
     </div>
