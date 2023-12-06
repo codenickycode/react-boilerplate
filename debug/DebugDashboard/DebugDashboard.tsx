@@ -1,4 +1,3 @@
-import styles from "./DebugDashboard.module.css";
 import { ScriptRunner } from "../components/ScriptRunner/ScriptRunner";
 import ReactIcon from "../assets/react.svg";
 import { ReactNode, forwardRef } from "react";
@@ -6,9 +5,9 @@ import { ChecklistItem } from "../components/ChecklistItem";
 
 export function DebugDashboard() {
   return (
-    <div className={styles.debugDashboard}>
+    <div className="my-0 mx-auto max-w-7xl p-1">
       <Section title="Bundler Checklist" divide>
-        <ol className={styles.bundlerChecklistItems}>
+        <div className="flex flex-wrap gap-8 justify-evenly text-sm">
           <ChecklistItem
             Item={FontLoaderItem}
             description="(font loader)"
@@ -29,10 +28,10 @@ export function DebugDashboard() {
             description="(dot env plugin)"
             check={processEnvCheck}
           />
-        </ol>
+        </div>
       </Section>
       <Section title="Scripts">
-        <div className={styles.scriptRunners}>
+        <div className="grid grid-cols-auto-fill-38rem gap-4">
           <ScriptRunner script="lint" />
           <ScriptRunner script="test" />
           <ScriptRunner script="typecheck" />
@@ -52,17 +51,17 @@ const fontLoaderCheck = (element: HTMLElement) => {
 };
 
 const CssModulesItem = forwardRef<HTMLElement>((props, ref) => (
-  <span ref={ref} className={styles.cssModuleCheck}>
+  <span ref={ref} className="text-accent-primary">
     Blue class
   </span>
 ));
 const cssModulesCheck = (element: HTMLElement) => {
-  return element.classList.contains(styles.cssModuleCheck);
+  return element.classList.contains("text-accent-primary");
 };
 
 const SvgLoaderItem = forwardRef<HTMLElement>((props, ref) => (
-  <span ref={ref}>
-    <ReactIcon className={styles.icon} />
+  <span className="inline" ref={ref}>
+    <ReactIcon className="w-6 h-6 fill-text-primary" />
   </span>
 ));
 const svgLoaderCheck = (element: HTMLElement) => {
@@ -88,8 +87,10 @@ function Section({
   return (
     <>
       <h3>{title}</h3>
-      <div className={styles.sectionChildren}>{children}</div>
-      {divide && <div className={styles.divider} />}
+      <div className="py-0 px-4">{children}</div>
+      {divide && (
+        <div className="my-8 mx-0 border-b-[1px] border-divider-primary" />
+      )}
     </>
   );
 }

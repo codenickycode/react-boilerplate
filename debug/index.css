@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @font-face {
   font-family: "Open Sans";
   src: url("./assets/OpenSans-Regular-webfont.woff2") format("woff2");
@@ -5,32 +9,13 @@
   font-style: normal;
 }
 
-:root {
-  --bg-primary: #1f1f1f;
-  --bg-secondary: #27272a;
-  --text-primary: #fff;
-  --accent-primary: #18dcff;
-  --divider-primary: #4d4d4d;
-  --code-background: #000;
-  --code-text: #fffafa;
-  --radius-primary: 4px;
-  --padding-card: 0.25rem;
-}
-
 body {
   font-family: "Open Sans";
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
+  @apply bg-bg-primary text-text-primary;
 }
 
 h3 {
-  font-size: medium;
-  margin: 1rem 0;
-}
-
-ul,
-ol {
-  list-style-position: inside;
+  @apply text-base my-4 mx-0;
 }
 
 pre {

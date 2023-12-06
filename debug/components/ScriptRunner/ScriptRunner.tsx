@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import useWebSocket from "react-use-websocket";
 import { ScriptStatus } from "../../script-server/script-server.types";
 import { ConsoleOutput } from "../ConsoleOutput/ConsoleOutput";
-import styles from "./ScriptRunner.module.css";
 
 type ScriptName = "build" | "css" | "lint" | "test" | "typecheck";
 
@@ -22,17 +21,13 @@ export function ScriptRunner({ script }: { script: ScriptName }) {
   const { sendJsonMessage, lastJsonMessage } =
     useWebSocket<ScriptStatus | null>(socketUrl);
 
-  useEffect(() => {
-    sendJsonMessage({ script });
-  }, [script, sendJsonMessage]);
-
   const { status, message, output } = lastJsonMessage || {};
   const emoji = statusEmoji(script, status);
   const statusMessage = message || status;
 
   return (
-    <div className={styles.scriptRunner}>
-      <h4>
+    <div className="min-w-[38rem] flex flex-col items-center justify-center bg-bg-secondary p-4 rounded-md">
+      <h4 className="self-start pb-3">
         <pre>
           <code>
             {script}

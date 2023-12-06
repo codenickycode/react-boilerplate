@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
-import styles from "./ConsoleOutput.module.css";
 import Ansi from "ansi-to-react";
 import { Output } from "../../script-server/script-server.types";
-import clsx from "clsx";
 
 export function ConsoleOutput({ output }: { output: Output | undefined }) {
   const [rootEl, setRootRef] = useState<HTMLDivElement | null>(null);
@@ -23,7 +21,10 @@ export function ConsoleOutput({ output }: { output: Output | undefined }) {
   }, [codeLines.length, rootEl]);
 
   return (
-    <div ref={setRootRef} className={clsx(styles.console)}>
+    <div
+      ref={setRootRef}
+      className="w-[98%] border border-divider-primary p-padding-card h-40 overflow-auto bg-code-background text-code-text"
+    >
       <pre>
         {codeLines.map((line, i) => {
           return <Ansi key={line + i}>{line}</Ansi>;

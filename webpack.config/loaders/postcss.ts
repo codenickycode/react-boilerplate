@@ -1,10 +1,10 @@
-import { RuleSetUseItem } from 'webpack';
+import { RuleSetUseItem } from "webpack";
 
 const postCssLoader: RuleSetUseItem = {
-  loader: 'postcss-loader',
+  loader: "postcss-loader",
   options: {
     postcssOptions: {
-      plugins: ['autoprefixer'],
+      plugins: ["tailwindcss", "autoprefixer"],
     },
   },
 };
