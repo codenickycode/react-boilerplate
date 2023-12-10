@@ -1,7 +1,7 @@
 import { forwardRef } from "react";
 import { Section } from "../../components/Section";
 import { ChecklistItem } from "./ChecklistItem";
-import ReactIcon from "../assets/react.svg";
+import ReactIcon from "../../assets/react.svg";
 
 export function BundlerChecklist() {
   return (

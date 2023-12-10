@@ -68,7 +68,7 @@ function startScript(ws: WebSocket, script: string) {
   });
 
   scriptProcess.on("close", (code, signal) => {
-    if (signal === "SIGINT") {
+    if (signal === "SIGINT" || signal === "SIGTERM") {
       ws.send(cancelledMessage(script));
     } else if (code === 0) {
       ws.send(successMessage(script));
@@ -85,5 +85,6 @@ function stopScript(script: string) {
     console.warn("script already stopped");
     return;
   }
+  processRecord.process.kill("SIGINT");
   processRecord.process.kill("SIGINT");
 }
