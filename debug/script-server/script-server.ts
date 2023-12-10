@@ -8,13 +8,22 @@ import {
   successMessage,
 } from "./messages";
 
+const SERVER_PORT = 8000;
+const CLIENT_PORT = 3003;
+
 type ProcessRecord = {
   process: ChildProcessWithoutNullStreams;
 };
 
 const processes: Record<string, ProcessRecord> = {};
 
-const wss = new WebSocket.Server({ port: 8000 });
+const wss = new WebSocket.Server({
+  port: SERVER_PORT,
+  verifyClient: (info, callback) => {
+    const allowed = info.origin === `http://localhost:${CLIENT_PORT}`;
+    callback(allowed);
+  },
+});
 
 wss.on("connection", (ws: WebSocket) => {
   ws.on("message", async (message: string) => {
