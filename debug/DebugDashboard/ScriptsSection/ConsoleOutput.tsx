@@ -2,13 +2,12 @@ import { useEffect, useState } from "react";
 import Ansi from "ansi-to-react";
 import { Output } from "../../script-server/script-server.types";
 
-export function ConsoleOutput({
-  output,
-  script,
-}: {
+interface ConsoleOutputProps {
   output: Output | undefined;
   script: string;
-}) {
+}
+
+export function ConsoleOutput(props: ConsoleOutputProps) {
   const [rootEl, setRootRef] = useState<HTMLDivElement | null>(null);
   const [codeLines, setCodeLines] = useState<string[]>([
     "\n",
@@ -16,16 +15,16 @@ export function ConsoleOutput({
     "\n",
     "\n",
     "\n",
-    `$ pnpm run ${script} ▋`,
+    `$ pnpm run ${props.script} ▋`,
   ]);
 
   // Add output each time it's received
   useEffect(() => {
-    if (output) {
-      const newLine = String.fromCharCode(...(output?.data || []));
+    if (props.output) {
+      const newLine = String.fromCharCode(...(props.output?.data || []));
       setCodeLines((prevLines) => [...prevLines, newLine]);
     }
-  }, [output, rootEl]);
+  }, [props.output, rootEl]);
 
   // Keep the console scrolled to the bottom
   useEffect(() => {
