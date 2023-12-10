@@ -10,7 +10,7 @@
     "debug": "pnpm css --watch & FORCE_COLOR=1 pnpm script-server & cross-env webpack serve --config ./webpack.config/index.ts --env mode=development --entry ./debug/debug.tsx",
     "develop": "pnpm css --watch & cross-env webpack serve --config ./webpack.config/index.ts --env mode=development --entry ./src/index.tsx",
     "lint": "eslint src --env-info",
-    "script-server": "ts-node debug/script-server/script-server.ts",
+    "script-server": "ts-node debug/script-server/script-server.ts --server-port=8000 --client-port=3003",
     "test": "jest",
     "typecheck": "tsc --diagnostics"
   },
@@ -45,6 +45,7 @@
     "@types/react-dom": "^18.2.17",
     "@types/webpack": "^5.28.5",
     "@types/ws": "^8.5.10",
+    "@types/yargs": "^17.0.32",
     "@typescript-eslint/eslint-plugin": "^6.13.1",
     "@typescript-eslint/parser": "^6.13.1",
     "autoprefixer": "^10.4.16",
@@ -83,6 +84,7 @@
     "react-dom": "^18.2.0",
     "react-use-websocket": "^4.5.0",
     "ws": "^8.14.2",
+    "yargs": "^17.7.2",
     "zod": "^3.22.4"
   },
   "engines": {

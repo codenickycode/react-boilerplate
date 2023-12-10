@@ -1,6 +1,7 @@
+import yargs from "yargs";
 import WebSocket from "ws";
 import { ChildProcessWithoutNullStreams, spawn } from "child_process";
-import { ScriptRunnerMessageZ } from "./script-server.types";
+import { ArgvZ, ScriptRunnerMessageZ } from "./script-server.types";
 import {
   cancelledMessage,
   failedMessage,
@@ -8,8 +9,18 @@ import {
   successMessage,
 } from "./messages";
 
-const SERVER_PORT = 8000;
-const CLIENT_PORT = 3003;
+const argv = ArgvZ.parse(
+  yargs
+    .option("server-port", {
+      alias: "serverPort",
+      type: "number",
+    })
+    .option("client-port", {
+      alias: "clientPort",
+      type: "number",
+    })
+    .help().argv
+);
 
 type ProcessRecord = {
   process: ChildProcessWithoutNullStreams;
@@ -18,9 +29,9 @@ type ProcessRecord = {
 const processes: Record<string, ProcessRecord> = {};
 
 const wss = new WebSocket.Server({
-  port: SERVER_PORT,
+  port: argv.serverPort,
   verifyClient: (info, callback) => {
-    const allowed = info.origin === `http://localhost:${CLIENT_PORT}`;
+    const allowed = info.origin === `http://localhost:${argv.clientPort}`;
     callback(allowed);
   },
 });
