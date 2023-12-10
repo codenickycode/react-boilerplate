@@ -1,8 +1,16 @@
+import { z } from "zod";
+
+export const ScriptRunnerMessageZ = z.object({
+  command: z.union([z.literal("start"), z.literal("stop")]),
+  script: z.string(),
+});
+export type ScriptRunnerMessage = z.infer<typeof ScriptRunnerMessageZ>;
+
 export interface Output {
   data?: number[];
 }
 
-export type ScriptStatusType = "running" | "stopped" | "success" | "failed";
+export type ScriptStatusType = "running" | "cancelled" | "success" | "failed";
 
 export interface ScriptStatus {
   /** The script this socket is running */

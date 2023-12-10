@@ -10,7 +10,7 @@ const socketUrl = "ws://localhost:8000";
 
 const statusEmoji = (script: string, status?: ScriptStatusType) => {
   if (status === undefined) return "?";
-  if (status === "stopped") return "?";
+  if (status === "cancelled") return "𝘅";
   if (status === "failed") return "❌";
   if (status === "success") return "✅";
   if (script.includes("lint")) return "🧹";
@@ -24,7 +24,7 @@ const buttonLabel = (status?: ScriptStatusType) => {
     case "running":
       return "stop";
     case "failed":
-    case "stopped":
+    case "cancelled":
     case "success":
     case undefined:
     default:
@@ -37,7 +37,7 @@ const buttonIcon = (status?: ScriptStatusType) => {
     case "running":
       return "⏹";
     case "failed":
-    case "stopped":
+    case "cancelled":
     case "success":
     case undefined:
     default:

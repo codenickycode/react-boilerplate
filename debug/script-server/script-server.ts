@@ -1,10 +1,15 @@
 import WebSocket from "ws";
 import { ChildProcessWithoutNullStreams, spawn } from "child_process";
-import { Output, ScriptStatus } from "./script-server.types";
+import { ScriptRunnerMessageZ } from "./script-server.types";
+import {
+  cancelledMessage,
+  failedMessage,
+  runningMessage,
+  successMessage,
+} from "./messages";
 
 type ProcessRecord = {
   process: ChildProcessWithoutNullStreams;
-  cancelled?: boolean;
 };
 
 const processes: Record<string, ProcessRecord> = {};
@@ -13,80 +18,52 @@ const wss = new WebSocket.Server({ port: 8000 });
 
 wss.on("connection", (ws: WebSocket) => {
   ws.on("message", async (message: string) => {
-    const { command, script } = JSON.parse(message);
-    switch (command) {
-      case "start":
-        if (processes[script]) {
-          console.warn("script already running");
-          return;
-        }
-        const scriptProcess = spawn("pnpm", [script]);
-        processes[script] = { process: scriptProcess };
-        sendRunning(ws, script);
-        scriptProcess.stdout.on("data", (data) => {
-          sendRunning(ws, script, data);
-        });
-        scriptProcess.stderr.on("data", (data) => {
-          sendRunning(ws, script, data);
-        });
-        scriptProcess.on("close", (code) => {
-          if (code === 0) {
-            sendSuccess(ws, script);
-          } else if (processes[script].cancelled) {
-            sendCancelled(ws, script);
-          } else {
-            sendFailed(ws, script, code ?? 1);
-          }
-          delete processes[script];
-        });
-        break;
-      case "stop":
-        const processRecord = processes[script];
-        if (!processRecord) {
-          console.warn("script already stopped");
-          break;
-        }
-        processRecord.cancelled = true;
-        processRecord.process.kill();
-        break;
-      default:
-        throw new Error("command not implemented");
+    const { command, script } = ScriptRunnerMessageZ.parse(JSON.parse(message));
+    if (command === "start") {
+      startScript(ws, script);
+    }
+    if (command === "stop") {
+      stopScript(script);
     }
   });
 });
 
-function sendStatus(ws: WebSocket, status: ScriptStatus) {
-  ws.send(JSON.stringify(status));
-}
+function startScript(ws: WebSocket, script: string) {
+  if (processes[script]) {
+    console.warn("script already running");
+    return;
+  }
 
-function sendRunning(ws: WebSocket, script: string, data?: Output) {
-  sendStatus(ws, {
-    script,
-    status: "running",
-    output: data,
+  const scriptProcess = spawn("pnpm", [script]);
+  processes[script] = { process: scriptProcess };
+
+  ws.send(runningMessage(script));
+
+  scriptProcess.stdout.on("data", (data) => {
+    ws.send(runningMessage(script, data));
+  });
+
+  scriptProcess.stderr.on("data", (data) => {
+    ws.send(runningMessage(script, data));
+  });
+
+  scriptProcess.on("close", (code, signal) => {
+    if (signal === "SIGINT") {
+      ws.send(cancelledMessage(script));
+    } else if (code === 0) {
+      ws.send(successMessage(script));
+    } else {
+      ws.send(failedMessage(script, code ?? 1));
+    }
+    delete processes[script];
   });
 }
 
-function sendSuccess(ws: WebSocket, script: string) {
-  sendStatus(ws, {
-    script,
-    status: "success",
-    message: "Success!",
-  });
-}
-
-function sendCancelled(ws: WebSocket, script: string) {
-  sendStatus(ws, {
-    script,
-    status: "stopped",
-    message: "cancelled",
-  });
-}
-
-function sendFailed(ws: WebSocket, script: string, code: number) {
-  sendStatus(ws, {
-    script,
-    status: "failed",
-    message: "Code: " + code,
-  });
+function stopScript(script: string) {
+  const processRecord = processes[script];
+  if (!processRecord) {
+    console.warn("script already stopped");
+    return;
+  }
+  processRecord.process.kill("SIGINT");
 }
