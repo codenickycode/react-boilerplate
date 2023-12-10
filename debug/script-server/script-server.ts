@@ -75,7 +75,6 @@ function startScript(ws: WebSocket, script: string) {
     } else {
       ws.send(failedMessage(script, code ?? 1));
     }
-    delete processes[script];
   });
 }
 
@@ -87,4 +86,5 @@ function stopScript(script: string) {
   }
   processRecord.process.kill("SIGINT");
   processRecord.process.kill("SIGINT");
+  delete processes[script];
 }
