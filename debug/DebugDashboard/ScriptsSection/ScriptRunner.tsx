@@ -16,9 +16,18 @@ export function ScriptRunner(props: ScriptRunnerProps) {
   const [scriptStatus, setScriptStatus] = useState<ScriptStatus>(
     {} as ScriptStatus
   );
+  const [consoleKey, setConsoleKey] = useState(0);
+
   useEffect(() => {
     if (props.script !== props.wsMessage.script) {
       return;
+    }
+    if (
+      scriptStatus.status !== "running" &&
+      props.wsMessage.status === "running"
+    ) {
+      // reset the console by updating its key
+      setConsoleKey((prev) => prev + 1);
     }
     setScriptStatus(props.wsMessage);
   }, [props.script, props.wsMessage, scriptStatus.status]);
@@ -49,7 +58,11 @@ export function ScriptRunner(props: ScriptRunnerProps) {
           {buttonLabel(scriptStatus.status)} {buttonIcon(scriptStatus.status)}
         </button>
       </div>
-      <ConsoleOutput output={scriptStatus.output} script={props.script} />
+      <ConsoleOutput
+        key={`${props.script}:${console}:${consoleKey}`}
+        output={scriptStatus.output}
+        script={props.script}
+      />
     </div>
   );
 }
