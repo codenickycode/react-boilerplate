@@ -1,6 +1,6 @@
 import yargs from "yargs";
 import WebSocket from "ws";
-import { ChildProcessWithoutNullStreams, spawn } from "child_process";
+import { spawn } from "child_process";
 import {
   ArgvZ,
   ProcessRecord,
@@ -68,6 +68,7 @@ function startScript(ws: WebSocket, script: string) {
   });
 
   scriptProcess.on("close", (code, signal) => {
+    delete processes[script];
     if (signal === "SIGINT" || signal === "SIGTERM") {
       ws.send(cancelledMessage(script, processes));
     } else if (code === 0) {
@@ -84,7 +85,7 @@ function stopScript(script: string) {
     console.warn("script already stopped");
     return;
   }
+  processRecord.cancelling = true;
   processRecord.process.kill("SIGINT");
   processRecord.process.kill("SIGINT");
-  delete processes[script];
 }

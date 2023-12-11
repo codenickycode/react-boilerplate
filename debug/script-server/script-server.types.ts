@@ -21,6 +21,7 @@ export interface Output {
 export type ScriptStatusType =
   | "running"
   | "cancelled"
+  | "cancelling"
   | "success"
   | "failed"
   | "unknown";
@@ -42,5 +43,6 @@ export type ProcessRecord = Record<
   string,
   {
     process: ChildProcessWithoutNullStreams;
+    cancelling?: boolean;
   }
 >;

@@ -6,12 +6,6 @@ import {
 } from "../../script-server/script-server.types";
 import { ConsoleOutput } from "./ConsoleOutput";
 
-type ExtendedScriptStatusType = ScriptStatusType | "cancelling";
-
-interface ExtendedScriptStatus extends Omit<ScriptStatus, "status"> {
-  status: ExtendedScriptStatusType;
-}
-
 interface ScriptRunnerProps {
   script: string;
   wsMessage: ScriptStatus;
@@ -19,18 +13,11 @@ interface ScriptRunnerProps {
 }
 
 export function ScriptRunner(props: ScriptRunnerProps) {
-  const [scriptStatus, setScriptStatus] = useState<ExtendedScriptStatus>(
+  const [scriptStatus, setScriptStatus] = useState<ScriptStatus>(
     {} as ScriptStatus
   );
   useEffect(() => {
     if (props.script !== props.wsMessage.script) {
-      return;
-    }
-    if (
-      scriptStatus.status === "cancelling" &&
-      props.wsMessage.status === "running"
-    ) {
-      // ignore updates sneaking through while cancelling
       return;
     }
     setScriptStatus(props.wsMessage);
@@ -38,11 +25,6 @@ export function ScriptRunner(props: ScriptRunnerProps) {
 
   const toggleScript = () => {
     if (scriptStatus.status === "running") {
-      setScriptStatus((prev) => ({
-        ...prev,
-        // it sometimes takes time to kill the process
-        status: "cancelling",
-      }));
       props.sendCommand(props.script, "stop");
     } else {
       props.sendCommand(props.script, "start");
@@ -72,7 +54,7 @@ export function ScriptRunner(props: ScriptRunnerProps) {
   );
 }
 
-const statusEmoji = (script: string, status?: ExtendedScriptStatusType) => {
+const statusEmoji = (script: string, status?: ScriptStatusType) => {
   if (status === "cancelling") return "🚫";
   if (status === "cancelled") return "𝘅";
   if (status === "failed") return "❌";
@@ -82,9 +64,10 @@ const statusEmoji = (script: string, status?: ExtendedScriptStatusType) => {
   if (script.includes("test")) return "🧪";
   if (script.includes("type")) return "🔎";
   if (script.includes("build")) return "🛠️";
+  return "👾";
 };
 
-const buttonLabel = (status?: ExtendedScriptStatusType) => {
+const buttonLabel = (status?: ScriptStatusType) => {
   switch (status) {
     case "running":
     case "cancelling":
@@ -98,7 +81,7 @@ const buttonLabel = (status?: ExtendedScriptStatusType) => {
   }
 };
 
-const buttonIcon = (status?: ExtendedScriptStatusType) => {
+const buttonIcon = (status?: ScriptStatusType) => {
   switch (status) {
     case "running":
     case "cancelling":

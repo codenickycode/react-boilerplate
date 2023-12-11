@@ -1,34 +1,37 @@
-import { Output, ProcessRecord } from "./script-server.types";
+import { Output, ProcessRecord, ScriptStatus } from "./script-server.types";
 
 export function runningMessage(
   script: string,
   processes: ProcessRecord,
   data?: Output
 ) {
-  return JSON.stringify({
+  const scriptStatus: ScriptStatus = {
     script,
-    status: "running",
+    status: processes[script]?.cancelling ? "cancelling" : "running",
     output: data,
     numberOfRunningProcesses: Object.values(processes).length,
-  });
+  };
+  return JSON.stringify(scriptStatus);
 }
 
 export function successMessage(script: string, processes: ProcessRecord) {
-  return JSON.stringify({
+  const scriptStatus: ScriptStatus = {
     script,
     status: "success",
     message: "Success!",
     numberOfRunningProcesses: Object.values(processes).length,
-  });
+  };
+  return JSON.stringify(scriptStatus);
 }
 
 export function cancelledMessage(script: string, processes: ProcessRecord) {
-  return JSON.stringify({
+  const scriptStatus: ScriptStatus = {
     script,
     status: "cancelled",
     message: "cancelled",
     numberOfRunningProcesses: Object.values(processes).length,
-  });
+  };
+  return JSON.stringify(scriptStatus);
 }
 
 export function failedMessage(
@@ -36,10 +39,11 @@ export function failedMessage(
   processes: ProcessRecord,
   code: number
 ) {
-  return JSON.stringify({
+  const scriptStatus: ScriptStatus = {
     script,
     status: "failed",
     message: "Code: " + code,
     numberOfRunningProcesses: Object.values(processes).length,
-  });
+  };
+  return JSON.stringify(scriptStatus);
 }
