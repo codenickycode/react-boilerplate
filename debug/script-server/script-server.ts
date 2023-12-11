@@ -1,7 +1,11 @@
 import yargs from "yargs";
 import WebSocket from "ws";
 import { ChildProcessWithoutNullStreams, spawn } from "child_process";
-import { ArgvZ, ScriptRunnerMessageZ } from "./script-server.types";
+import {
+  ArgvZ,
+  ProcessRecord,
+  ScriptRunnerMessageZ,
+} from "./script-server.types";
 import {
   cancelledMessage,
   failedMessage,
@@ -22,11 +26,7 @@ const argv = ArgvZ.parse(
     .help().argv
 );
 
-type ProcessRecord = {
-  process: ChildProcessWithoutNullStreams;
-};
-
-const processes: Record<string, ProcessRecord> = {};
+const processes: ProcessRecord = {};
 
 const wss = new WebSocket.Server({
   port: argv.serverPort,
@@ -57,23 +57,23 @@ function startScript(ws: WebSocket, script: string) {
   const scriptProcess = spawn("pnpm", [script]);
   processes[script] = { process: scriptProcess };
 
-  ws.send(runningMessage(script));
+  ws.send(runningMessage(script, processes));
 
   scriptProcess.stdout.on("data", (data) => {
-    ws.send(runningMessage(script, data));
+    ws.send(runningMessage(script, processes, data));
   });
 
   scriptProcess.stderr.on("data", (data) => {
-    ws.send(runningMessage(script, data));
+    ws.send(runningMessage(script, processes, data));
   });
 
   scriptProcess.on("close", (code, signal) => {
     if (signal === "SIGINT" || signal === "SIGTERM") {
-      ws.send(cancelledMessage(script));
+      ws.send(cancelledMessage(script, processes));
     } else if (code === 0) {
-      ws.send(successMessage(script));
+      ws.send(successMessage(script, processes));
     } else {
-      ws.send(failedMessage(script, code ?? 1));
+      ws.send(failedMessage(script, processes, code ?? 1));
     }
   });
 }

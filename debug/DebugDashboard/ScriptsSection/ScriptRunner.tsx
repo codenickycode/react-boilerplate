@@ -1,45 +1,47 @@
-import useWebSocket from "react-use-websocket";
+import { useEffect, useState } from "react";
 import {
+  ScriptRunnerCommand,
   ScriptStatus,
   ScriptStatusType,
 } from "../../script-server/script-server.types";
 import { ConsoleOutput } from "./ConsoleOutput";
-import { useEffect, useRef } from "react";
-
-const socketUrl = "ws://localhost:8000";
 
 interface ScriptRunnerProps {
   script: string;
-  runOnMount: boolean;
+  wsMessage: ScriptStatus;
+  sendCommand: (script: string, command: ScriptRunnerCommand) => void;
 }
 
 export function ScriptRunner(props: ScriptRunnerProps) {
-  const runningRef = useRef(false);
-
-  const { sendJsonMessage, lastJsonMessage } =
-    useWebSocket<ScriptStatus | null>(socketUrl);
-
-  const { status, message, output } = lastJsonMessage || {};
+  const [scriptStatus, setScriptStatus] = useState<ScriptStatus>(
+    {} as ScriptStatus
+  );
+  useEffect(() => {
+    if (props.script !== props.wsMessage.script) {
+      return;
+    }
+    setScriptStatus((prev) => {
+      const newStatus = { ...prev };
+      if (props.wsMessage.message !== prev?.message) {
+        newStatus.message = props.wsMessage.message;
+      }
+      if (props.wsMessage.output !== prev?.output) {
+        newStatus.output = props.wsMessage.output;
+      }
+      if (props.wsMessage.status !== prev?.status) {
+        newStatus.status = props.wsMessage.status;
+      }
+      return newStatus;
+    });
+  }, [props.script, props.wsMessage]);
 
   const toggleScript = () => {
-    if (status === "running") {
-      sendJsonMessage({ script: props.script, command: "stop" });
+    if (scriptStatus.status === "running") {
+      props.sendCommand(props.script, "stop");
     } else {
-      sendJsonMessage({ script: props.script, command: "start" });
+      props.sendCommand(props.script, "start");
     }
   };
-
-  useEffect(() => {
-    if (props.runOnMount && !runningRef.current) {
-      runningRef.current = true;
-      sendJsonMessage({ script: props.script, command: "stop" });
-      sendJsonMessage({ script: props.script, command: "start" });
-    }
-  }, [props.runOnMount, props.script, sendJsonMessage]);
-
-  if (status !== "running") {
-    runningRef.current = false;
-  }
 
   return (
     <div className="min-w-[38rem] flex flex-col items-center justify-center bg-bg-secondary p-4 rounded-md font-mono">
@@ -47,16 +49,19 @@ export function ScriptRunner(props: ScriptRunnerProps) {
         <h4 className="self-start p-0">
           {props.script}
           {" _ "}
-          {statusEmoji(props.script, status)} {message || status}
+          {statusEmoji(props.script, scriptStatus.status)}{" "}
+          {scriptStatus.message || scriptStatus.status}
         </h4>
         <button
-          aria-label={`${buttonLabel(status)} ${props.script} script`}
+          aria-label={`${buttonLabel(scriptStatus.status)} ${
+            props.script
+          } script`}
           onClick={toggleScript}
         >
-          {buttonLabel(status)} {buttonIcon(status)}
+          {buttonLabel(scriptStatus.status)} {buttonIcon(scriptStatus.status)}
         </button>
       </div>
-      <ConsoleOutput output={output} script={props.script} />
+      <ConsoleOutput output={scriptStatus.output} script={props.script} />
     </div>
   );
 }

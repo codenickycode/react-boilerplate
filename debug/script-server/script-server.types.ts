@@ -1,7 +1,11 @@
+import { ChildProcessWithoutNullStreams } from "child_process";
 import { z } from "zod";
 
+const CommandZ = z.union([z.literal("start"), z.literal("stop")]);
+export type ScriptRunnerCommand = z.infer<typeof CommandZ>;
+
 export const ScriptRunnerMessageZ = z.object({
-  command: z.union([z.literal("start"), z.literal("stop")]),
+  command: CommandZ,
   script: z.string(),
 });
 
@@ -14,7 +18,12 @@ export interface Output {
   data?: number[];
 }
 
-export type ScriptStatusType = "running" | "cancelled" | "success" | "failed";
+export type ScriptStatusType =
+  | "running"
+  | "cancelled"
+  | "success"
+  | "failed"
+  | "unknown";
 
 export interface ScriptStatus {
   /** The script this socket is running */
@@ -25,4 +34,13 @@ export interface ScriptStatus {
   message?: string;
   /** Console output during script execution */
   output?: Output;
+  /** The number of processes running */
+  numberOfRunningProcesses: number;
 }
+
+export type ProcessRecord = Record<
+  string,
+  {
+    process: ChildProcessWithoutNullStreams;
+  }
+>;
