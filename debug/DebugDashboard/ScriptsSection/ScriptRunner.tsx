@@ -62,6 +62,7 @@ export function ScriptRunner(props: ScriptRunnerProps) {
         key={`${props.script}:${console}:${consoleKey}`}
         output={scriptStatus.output}
         script={props.script}
+        status={scriptStatus.status}
       />
     </div>
   );

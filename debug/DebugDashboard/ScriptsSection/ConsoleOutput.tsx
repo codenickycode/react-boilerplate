@@ -1,21 +1,24 @@
 import { useEffect, useState } from "react";
 import Ansi from "ansi-to-react";
-import { Output } from "../../script-server/script-server.types";
+import {
+  Output,
+  ScriptStatusType,
+} from "../../script-server/script-server.types";
 
 interface ConsoleOutputProps {
   output: Output | undefined;
   script: string;
+  status: ScriptStatusType;
 }
 
 export function ConsoleOutput(props: ConsoleOutputProps) {
+  const promptLine = `$ pnpm run ${props.script} ▋`;
   const [rootEl, setRootRef] = useState<HTMLDivElement | null>(null);
   const [codeLines, setCodeLines] = useState<string[]>([
     "\n",
     "\n",
     "\n",
     "\n",
-    "\n",
-    `$ pnpm run ${props.script} ▋`,
   ]);
 
   // Add output each time it's received
@@ -25,6 +28,13 @@ export function ConsoleOutput(props: ConsoleOutputProps) {
       setCodeLines((prevLines) => [...prevLines, newLine]);
     }
   }, [props.output, rootEl]);
+
+  // add prompt after runs
+  useEffect(() => {
+    if (props.status !== "running" && props.status !== "cancelling") {
+      setCodeLines((prev) => [...prev, "\n", promptLine]);
+    }
+  }, [promptLine, props.status]);
 
   // Keep the console scrolled to the bottom
   useEffect(() => {
