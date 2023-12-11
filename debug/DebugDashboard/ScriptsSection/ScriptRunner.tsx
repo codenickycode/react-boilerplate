@@ -6,6 +6,12 @@ import {
 } from "../../script-server/script-server.types";
 import { ConsoleOutput } from "./ConsoleOutput";
 
+type ExtendedScriptStatusType = ScriptStatusType | "cancelling";
+
+interface ExtendedScriptStatus extends Omit<ScriptStatus, "status"> {
+  status: ExtendedScriptStatusType;
+}
+
 interface ScriptRunnerProps {
   script: string;
   wsMessage: ScriptStatus;
@@ -13,30 +19,30 @@ interface ScriptRunnerProps {
 }
 
 export function ScriptRunner(props: ScriptRunnerProps) {
-  const [scriptStatus, setScriptStatus] = useState<ScriptStatus>(
+  const [scriptStatus, setScriptStatus] = useState<ExtendedScriptStatus>(
     {} as ScriptStatus
   );
   useEffect(() => {
     if (props.script !== props.wsMessage.script) {
       return;
     }
-    setScriptStatus((prev) => {
-      const newStatus = { ...prev };
-      if (props.wsMessage.message !== prev?.message) {
-        newStatus.message = props.wsMessage.message;
-      }
-      if (props.wsMessage.output !== prev?.output) {
-        newStatus.output = props.wsMessage.output;
-      }
-      if (props.wsMessage.status !== prev?.status) {
-        newStatus.status = props.wsMessage.status;
-      }
-      return newStatus;
-    });
-  }, [props.script, props.wsMessage]);
+    if (
+      scriptStatus.status === "cancelling" &&
+      props.wsMessage.status === "running"
+    ) {
+      // ignore updates sneaking through while cancelling
+      return;
+    }
+    setScriptStatus(props.wsMessage);
+  }, [props.script, props.wsMessage, scriptStatus.status]);
 
   const toggleScript = () => {
     if (scriptStatus.status === "running") {
+      setScriptStatus((prev) => ({
+        ...prev,
+        // it sometimes takes time to kill the process
+        status: "cancelling",
+      }));
       props.sendCommand(props.script, "stop");
     } else {
       props.sendCommand(props.script, "start");
@@ -66,20 +72,22 @@ export function ScriptRunner(props: ScriptRunnerProps) {
   );
 }
 
-const statusEmoji = (script: string, status?: ScriptStatusType) => {
-  if (status === undefined) return "?";
+const statusEmoji = (script: string, status?: ExtendedScriptStatusType) => {
+  if (status === "cancelling") return "🚫";
   if (status === "cancelled") return "𝘅";
   if (status === "failed") return "❌";
   if (status === "success") return "✅";
+  if (status === undefined) return "?";
   if (script.includes("lint")) return "🧹";
   if (script.includes("test")) return "🧪";
   if (script.includes("type")) return "🔎";
   if (script.includes("build")) return "🛠️";
 };
 
-const buttonLabel = (status?: ScriptStatusType) => {
+const buttonLabel = (status?: ExtendedScriptStatusType) => {
   switch (status) {
     case "running":
+    case "cancelling":
       return "stop";
     case "failed":
     case "cancelled":
@@ -90,9 +98,10 @@ const buttonLabel = (status?: ScriptStatusType) => {
   }
 };
 
-const buttonIcon = (status?: ScriptStatusType) => {
+const buttonIcon = (status?: ExtendedScriptStatusType) => {
   switch (status) {
     case "running":
+    case "cancelling":
       return "⏹";
     case "failed":
     case "cancelled":

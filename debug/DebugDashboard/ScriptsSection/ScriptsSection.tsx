@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Section } from "../../components/Section";
 import { ScriptRunner } from "./ScriptRunner";
 import {
@@ -53,7 +52,7 @@ export function ScriptsSection(props: ScriptsSectionProps) {
       <div className="grid grid-cols-auto-fill-38rem gap-4">
         {props.scripts.map((script) => (
           <ScriptRunner
-            key={`${script}`}
+            key={script}
             script={script}
             wsMessage={wsMessage}
             sendCommand={sendCommand}
